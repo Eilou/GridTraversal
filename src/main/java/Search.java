@@ -14,6 +14,7 @@ public class Search {
     private GridNode startNode;
     private GridNode goalNode;
     private GridNode currentNode;
+    private String strategy;
 
     /**
      * Runs the search on a given grid, starting at the supplied node and ending at the specified
@@ -22,14 +23,16 @@ public class Search {
      * @param grid      grid of nodes to search through
      * @param startNode the node to start at
      * @param goalNode  the node to end on
+     * @param strategy  the strategy to run
      */
-    public Search(Grid grid, GridNode startNode, GridNode goalNode) {
+    public Search(Grid grid, GridNode startNode, GridNode goalNode, String strategy) {
         this.grid = grid;
         this.openList = new ArrayList<>();
         this.closedList = new ArrayList<>();
         this.startNode = startNode;
         this.currentNode = startNode;
         this.goalNode = goalNode;
+        this.strategy = strategy;
     }
 
     /**
@@ -63,7 +66,7 @@ public class Search {
             openList.remove(currentNode);
             closedList.add(currentNode);
 
-            currentNode = pickNext("Dijkstra");
+            currentNode = pickNext(strategy);
 
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
@@ -77,6 +80,12 @@ public class Search {
     public GridNode pickNext(String strategy) throws RuntimeException {
 
         switch (strategy) {
+            case "BFS" -> {
+                return bfs();
+            }
+            case "DFS" -> {
+                return dfs();
+            }
             case "Dijkstra" -> {
                 return dijkstra();
             }
@@ -98,10 +107,10 @@ public class Search {
         ArrayList<GridNode> successors = new ArrayList<>();
         int[][] newNodeCoords = new int[4][2];
         if (currentNode.getX() != grid.getRows()) {
-            newNodeCoords[0] = new int[]{currentNode.getX() - 1, currentNode.getY()}; //left
-            newNodeCoords[1] = new int[]{currentNode.getX(), currentNode.getY() - 1}; //top
-            newNodeCoords[2] = new int[]{currentNode.getX() + 1, currentNode.getY()}; //right
-            newNodeCoords[3] = new int[]{currentNode.getX(), currentNode.getY() + 1}; //bottom
+            newNodeCoords[0] = new int[]{currentNode.getX() + 1, currentNode.getY()}; //right
+            newNodeCoords[1] = new int[]{currentNode.getX(), currentNode.getY() + 1}; //bottom
+            newNodeCoords[2] = new int[]{currentNode.getX() - 1, currentNode.getY()}; //left
+            newNodeCoords[3] = new int[]{currentNode.getX(), currentNode.getY() - 1}; //top
         }
 
         // make sure coordinates are not out of bounds
@@ -116,6 +125,12 @@ public class Search {
 
     }
 
+    /**
+     * Ensures the nodes to be added are not onthe
+     *
+     * @param unvettedSuccessors
+     * @return
+     */
     public ArrayList<GridNode> vetSuccessors(ArrayList<GridNode> unvettedSuccessors) {
         ArrayList<GridNode> vettedSuccessors = new ArrayList<>();
         for (GridNode gridNode : unvettedSuccessors) {
@@ -124,11 +139,19 @@ public class Search {
             if (canAdd)
                 canAdd = !closedList.contains(gridNode);
             if (canAdd) {
-                gridNode.setState(currentNode.getState().getLocalCost()+1);
+                gridNode.setState(currentNode.getState().getLocalCost() + 1);
                 vettedSuccessors.add(gridNode);
             }
         }
         return vettedSuccessors;
+    }
+
+    public GridNode bfs() {
+        return openList.get(0);
+    }
+
+    public GridNode dfs() {
+        return openList.get(openList.size() - 1);
     }
 
     public GridNode dijkstra() {

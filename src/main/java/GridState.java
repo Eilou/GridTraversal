@@ -9,8 +9,27 @@ public class GridState {
      * Creates a given item with initially no cost
      */
     public GridState() {
-        this.localCost = 0;
-        this.globalCost = 0;
+        this(0,0);
+    }
+
+    /**
+     * One parameter used to specify just the local cost
+     *
+     * @param localCost local cost of the node
+     */
+    public GridState(int localCost) {
+        this(localCost, 0);
+    }
+
+    /**
+     * Use both parameters to specify both local and global
+     *
+     * @param localCost local cost of the node
+     * @param globalCost global cost of the node
+     */
+    public GridState(int localCost, int globalCost) {
+        this.localCost = localCost;
+        this.globalCost = globalCost;
     }
 
     public int getGlobalCost() {

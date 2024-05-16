@@ -60,5 +60,27 @@ public class Grid {
 
     }
 
+    public int getRows() {
+        return rows;
+    }
 
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public GridNode[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(GridNode[][] grid) {
+        this.grid = grid;
+    }
 }

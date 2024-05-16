@@ -9,7 +9,7 @@ public class App {
         System.out.println(grid);
 
         Search search = new Search(grid, grid.getNodeByCoords(0,0), grid.getNodeByCoords(rows-1,
-                columns-1), "DFS");
+                columns-1), "BFS");
         search.runSearch();
 
 

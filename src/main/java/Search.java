@@ -139,7 +139,10 @@ public class Search {
             if (canAdd)
                 canAdd = !closedList.contains(gridNode);
             if (canAdd) {
-                gridNode.setState(currentNode.getState().getLocalCost() + 1);
+//                gridNode.setState(currentNode.getState().getLocalCost() + 1);
+                int xSteps = Math.abs(currentNode.getX() - startNode.getX());
+                int ySteps = Math.abs(currentNode.getY() - startNode.getY());
+                gridNode.setState(xSteps+ySteps + 1);
                 vettedSuccessors.add(gridNode);
             }
         }

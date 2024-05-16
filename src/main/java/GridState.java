@@ -5,6 +5,9 @@ public class GridState {
     private int localCost;
     private int globalCost;
 
+    /**
+     * Creates a given item with initially no cost
+     */
     public GridState() {
         this.localCost = 0;
         this.globalCost = 0;

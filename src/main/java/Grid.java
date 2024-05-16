@@ -44,10 +44,17 @@ public class Grid {
     @Override
     public String toString() {
         StringBuilder gridOutput = new StringBuilder();
+        gridOutput.append("  ");
         gridOutput.append("-".repeat(Math.max(0, (columns * 2) + 3)));
+        gridOutput.append("\n    ");
+        for (int i = 0; i < columns; i++)
+            gridOutput.append(i + " ");
+        gridOutput.append("\n    ");
+        gridOutput.append("-".repeat(Math.max(0, (columns * 2) + 3)));
+
         gridOutput.append("\n");
         for (int i = 0; i < rows; i++) {
-            gridOutput.append("| ");
+            gridOutput.append(i + " | ");
             for (int j = 0; j < columns; j++) {
                 gridOutput.append(grid[i][j]);
                 gridOutput.append(" ");

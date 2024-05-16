@@ -61,8 +61,6 @@ public class Search {
 
             openList.addAll(vettedSuccessors);
             openList.remove(currentNode);
-
-            currentNode.setState(visit);
             closedList.add(currentNode);
 
             currentNode = pickNext("Dijkstra");
@@ -124,8 +122,10 @@ public class Search {
             boolean canAdd = true;
             canAdd = !openList.contains(gridNode);
             canAdd = !closedList.contains(gridNode);
-            if (canAdd)
+            if (canAdd) {
+                gridNode.setState(currentNode.getState().getLocalCost()+1);
                 vettedSuccessors.add(gridNode);
+            }
         }
         return vettedSuccessors;
     }

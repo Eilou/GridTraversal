@@ -121,7 +121,8 @@ public class Search {
         for (GridNode gridNode : unvettedSuccessors) {
             boolean canAdd = true;
             canAdd = !openList.contains(gridNode);
-            canAdd = !closedList.contains(gridNode);
+            if (canAdd)
+                canAdd = !closedList.contains(gridNode);
             if (canAdd) {
                 gridNode.setState(currentNode.getState().getLocalCost()+1);
                 vettedSuccessors.add(gridNode);

@@ -15,6 +15,7 @@ public class Search {
     private String strategy;
 
     private GUIFrame guiFrame;
+    private int delay;
 
     /**
      * Runs the search on a given grid, starting at the supplied node and ending at the specified
@@ -24,8 +25,9 @@ public class Search {
      * @param startNode the node to start at
      * @param goalNode  the node to end on
      * @param strategy  the strategy to run
+     * @param delay     the delay between each iteration
      */
-    public Search(Grid grid, GridNode startNode, GridNode goalNode, String strategy) {
+    public Search(Grid grid, GridNode startNode, GridNode goalNode, String strategy, int delay) {
         this.grid = grid;
         this.openList = new ArrayList<>();
         this.closedList = new ArrayList<>();
@@ -33,6 +35,7 @@ public class Search {
         this.currentNode = startNode;
         this.goalNode = goalNode;
         this.strategy = strategy;
+        this.delay = delay;
     }
 
     /**
@@ -42,12 +45,17 @@ public class Search {
      */
     public boolean runSearch() {
 
+
+
         openList.add(startNode);
         while (!openList.isEmpty()) {
             guiFrame.repaint();
+            if (isGoal()) {
+               return true;
+            }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(delay);
             } catch (InterruptedException ie) {
                 System.out.println("An interrupt has occurred");
                 System.out.println(ie.getMessage());
@@ -158,6 +166,10 @@ public class Search {
         return vettedSuccessors;
     }
 
+    public boolean isGoal() {
+        return currentNode == goalNode;
+    }
+
     public GridNode bfs() {
         return openList.get(0);
     }
@@ -190,35 +202,21 @@ public class Search {
         return currentNode;
     }
 
-    public void setCurrentNode(GridNode currentNode) {
-        this.currentNode = currentNode;
-    }
-
     public Grid getGrid() {
         return grid;
-    }
-
-    public void setGrid(Grid grid) {
-        this.grid = grid;
     }
 
     public ArrayList<GridNode> getOpenList() {
         return openList;
     }
 
-    public void setOpenList(ArrayList<GridNode> openList) {
-        this.openList = openList;
-    }
-
     public ArrayList<GridNode> getClosedList() {
         return closedList;
-    }
-
-    public void setClosedList(ArrayList<GridNode> closedList) {
-        this.closedList = closedList;
     }
 
     public void setGUIFrame(GUIFrame guiFrame) {
         this.guiFrame = guiFrame;
     }
+
+
 }

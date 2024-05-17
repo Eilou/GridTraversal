@@ -11,14 +11,19 @@ public class App {
         System.out.println(grid);
 
         GridNode startNode = grid.getNodeByCoords(0,0);
-        GridNode goalNode = grid.getNodeByCoords(rows-1, columns-1);
+        GridNode goalNode = grid.getNodeByCoords(5, 5);
 
-        Search search = new Search(grid, startNode, goalNode, "DFS");
+        int delay = 100;
+        Search search = new Search(grid, startNode, goalNode, "BFS", delay);
 
         GUIFrame guiFrame = new GUIFrame(search);
 
         search.setGUIFrame(guiFrame);
-        search.runSearch();
+        if (search.runSearch())
+            System.out.println("Goal has been found");
+        else
+            System.out.println("Goal has not been found");
+
 
     }
 }

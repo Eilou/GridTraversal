@@ -52,6 +52,7 @@ public class DrawingPanel extends JPanel {
         drawOpenAndClose();
         drawStartNode();
         drawGoalNode();
+        drawCurrentNode();
         drawGridLines();
     }
 
@@ -110,8 +111,13 @@ public class DrawingPanel extends JPanel {
                     cell.width, cell.height);
         }
 
+    }
 
-
+    public void drawCurrentNode() {
+        GridNode currentNode = search.getCurrentNode();
+        g2d.setColor(new Color(255, 0, 0));
+        g2d.fillRect(currentNode.getX() * cell.width, currentNode.getY() * cell.height, cell.width,
+                cell.height);
     }
 
 

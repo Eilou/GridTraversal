@@ -45,6 +45,14 @@ public class Search {
         openList.add(startNode);
         while (!openList.isEmpty()) {
             guiFrame.repaint();
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ie) {
+                System.out.println("An interrupt has occurred");
+                System.out.println(ie.getMessage());
+            }
+
             expand();
             System.out.println("Iteration again");
             System.out.println(grid);

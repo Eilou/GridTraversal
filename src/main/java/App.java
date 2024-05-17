@@ -1,5 +1,7 @@
 package main.java;
 
+import main.java.GUI.GUIFrame;
+
 public class App {
     public static void main (String[] arg) {
         int rows = 10;
@@ -8,10 +10,14 @@ public class App {
         Grid grid = new Grid(rows, columns);
         System.out.println(grid);
 
-        Search search = new Search(grid, grid.getNodeByCoords(0,0), grid.getNodeByCoords(rows-1,
-                columns-1), "BFS");
-        search.runSearch();
+        GridNode startNode = grid.getNodeByCoords(0,0);
+        GridNode goalNode = grid.getNodeByCoords(rows-1, columns-1);
 
+        Search search = new Search(grid, startNode, goalNode, "DFS");
+
+        GUIFrame guiFrame = new GUIFrame(search);
+
+        search.runSearch();
 
     }
 }

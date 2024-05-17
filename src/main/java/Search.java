@@ -65,9 +65,7 @@ public class Search {
             openList.addAll(vettedSuccessors);
             openList.remove(currentNode);
             closedList.add(currentNode);
-
             currentNode = pickNext(strategy);
-
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -118,7 +116,9 @@ public class Search {
             if (coords[0] == -1 || coords[0] == grid.getColumns() || coords[1] == -1 ||
                     coords[1] == grid.getRows())
                 continue;
-            successors.add(grid.getNodeByCoords(coords[0], coords[1]));
+            GridNode nodeToAdd = grid.getNodeByCoords(coords[0], coords[1]);
+            nodeToAdd.setParent(currentNode);
+            successors.add(nodeToAdd);
         }
 
         return successors;
@@ -139,10 +139,11 @@ public class Search {
             if (canAdd)
                 canAdd = !closedList.contains(gridNode);
             if (canAdd) {
+//                int xSteps = Math.abs(currentNode.getX() - startNode.getX());
+//                int ySteps = Math.abs(currentNode.getY() - startNode.getY());
+//                gridNode.setState(xSteps+ySteps + 1);
 //                gridNode.setState(currentNode.getState().getLocalCost() + 1);
-                int xSteps = Math.abs(currentNode.getX() - startNode.getX());
-                int ySteps = Math.abs(currentNode.getY() - startNode.getY());
-                gridNode.setState(xSteps+ySteps + 1);
+                gridNode.setState(gridNode.getParent().getState().getLocalCost() + 1);
                 vettedSuccessors.add(gridNode);
             }
         }
@@ -161,5 +162,35 @@ public class Search {
         return openList.get(0);
     }
 
+    public GridNode getStartNode() {
+        return startNode;
+    }
 
+    public void setStartNode(GridNode startNode) {
+        this.startNode = startNode;
+    }
+
+    public GridNode getGoalNode() {
+        return goalNode;
+    }
+
+    public void setGoalNode(GridNode goalNode) {
+        this.goalNode = goalNode;
+    }
+
+    public GridNode getCurrentNode() {
+        return currentNode;
+    }
+
+    public void setCurrentNode(GridNode currentNode) {
+        this.currentNode = currentNode;
+    }
+
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
 }

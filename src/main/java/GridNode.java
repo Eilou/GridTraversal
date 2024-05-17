@@ -1,9 +1,12 @@
 package main.java;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+
 public class GridNode {
 
     private int x;
     private int y;
+    private GridNode parent;
     private GridState state;
 
     /**
@@ -53,7 +56,20 @@ public class GridNode {
         this.state = state;
     }
 
+    /**
+     * Sets the local cost of a grid node by relaying it to the state
+     *
+     * @param localCost local cost of the grid node relative to the start
+     */
     public void setState(int localCost) {
-        this.state = new GridState(localCost);
+        this.state.setLocalCost(localCost);
+    }
+
+    public GridNode getParent() {
+        return parent;
+    }
+
+    public void setParent(GridNode parent) {
+        this.parent = parent;
     }
 }

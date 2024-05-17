@@ -17,6 +17,7 @@ public class App {
 
         GUIFrame guiFrame = new GUIFrame(search);
 
+        search.setGUIFrame(guiFrame);
         search.runSearch();
 
     }

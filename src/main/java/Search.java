@@ -1,10 +1,8 @@
 package main.java;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+
+import main.java.GUI.*;
 
 public class Search {
 
@@ -15,6 +13,8 @@ public class Search {
     private GridNode goalNode;
     private GridNode currentNode;
     private String strategy;
+
+    private GUIFrame guiFrame;
 
     /**
      * Runs the search on a given grid, starting at the supplied node and ending at the specified
@@ -44,6 +44,7 @@ public class Search {
 
         openList.add(startNode);
         while (!openList.isEmpty()) {
+            guiFrame.repaint();
             expand();
             System.out.println("Iteration again");
             System.out.println(grid);
@@ -61,7 +62,6 @@ public class Search {
         try {
             ArrayList<GridNode> succesors = getSuccessors();
             ArrayList<GridNode> vettedSuccessors = vetSuccessors(succesors);
-
             openList.addAll(vettedSuccessors);
             openList.remove(currentNode);
             closedList.add(currentNode);
@@ -192,5 +192,25 @@ public class Search {
 
     public void setGrid(Grid grid) {
         this.grid = grid;
+    }
+
+    public ArrayList<GridNode> getOpenList() {
+        return openList;
+    }
+
+    public void setOpenList(ArrayList<GridNode> openList) {
+        this.openList = openList;
+    }
+
+    public ArrayList<GridNode> getClosedList() {
+        return closedList;
+    }
+
+    public void setClosedList(ArrayList<GridNode> closedList) {
+        this.closedList = closedList;
+    }
+
+    public void setGUIFrame(GUIFrame guiFrame) {
+        this.guiFrame = guiFrame;
     }
 }

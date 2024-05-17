@@ -12,6 +12,7 @@ public class DrawingPanel extends JPanel {
     private Scaling scaling;
     private Dimension parentPanelSize;
     private Search search;
+    private Graphics2D g2d;
 
     /**
      * Sets up the panel and gives it access to the search data
@@ -34,18 +35,39 @@ public class DrawingPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponents(g);
-        Graphics2D g2d = (Graphics2D) g;
+        this.g2d = (Graphics2D) g;
 
         setup();
-        drawGridLines();
     }
 
     public void setup() {
         setBackground(Color.white);
+        drawGridLines();
+//        drawStartNode();
+//        drawGoalNode();
     }
 
     public void drawGridLines() {
+        Grid grid = search.getGrid();
 
+        int cellWidth = (int) Math.round(getSize().getWidth()/grid.getColumns());
+        int cellHeight = (int) Math.round(getSize().getHeight()/grid.getRows());
+
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Color.black);
+
+        for (int row = 0; row < grid.getRows(); row++)
+            g2d.drawLine(0, row * cellHeight, getSize().width, row * cellHeight);
+
+        for (int column = 0; column < grid.getColumns(); column++)
+            g2d.drawLine(column * cellWidth, 0, column * cellWidth,getSize().height);
+
+//            for (int column = 0; column < grid.getColumns(); column++) {
+//
+//                g2d.drawLine(column * cellWidth, );
+//
+//            }
+//        }
     }
 
 

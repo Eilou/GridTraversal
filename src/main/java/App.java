@@ -11,7 +11,7 @@ public class App {
         System.out.println(grid);
 
         GridNode startNode = grid.getNodeByCoords(0,0);
-        GridNode goalNode = grid.getNodeByCoords(5, 5);
+        GridNode goalNode = grid.getNodeByCoords(8, 7);
 
         int delay = 100;
         Search search = new Search(grid, startNode, goalNode, "BFS", delay);

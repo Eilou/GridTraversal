@@ -17,6 +17,7 @@ public class DrawingPanel extends JPanel {
     private Graphics2D g2d;
 
     private Dimension cell;
+    private String mode;
 
     /**
      * Sets up the panel and gives it access to the search data
@@ -30,10 +31,12 @@ public class DrawingPanel extends JPanel {
         this.search = search;
         setBackground(Color.white);
         setPreferredSize(new Dimension(scaling.scaledX(0.75), scaling.scaledY(1)));
+        this.mode = "Search";
     }
 
     /**
      * Draws the grid and updates as the search is ran
+     *
      * @param g the <code>Graphics</code> object to protect
      */
     @Override
@@ -42,18 +45,35 @@ public class DrawingPanel extends JPanel {
         this.g2d = (Graphics2D) g;
 
         setup();
+        if (mode.equals("Search"))
+            drawSearch();
+        else
+            drawTraceBack();
+        drawGridLines();
     }
 
     public void setup() {
         setBackground(Color.white);
         Grid grid = search.getGrid();
-        cell = new Dimension((int) Math.round(getSize().getWidth()/grid.getColumns()),
-                (int) Math.round(getSize().getHeight()/grid.getRows()));
+        cell = new Dimension((int) Math.round(getSize().getWidth() / grid.getColumns()),
+                (int) Math.round(getSize().getHeight() / grid.getRows()));
+    }
+
+    /**
+     * Draws the searching process as it happens
+     */
+    public void drawSearch() {
         drawOpenAndClose();
         drawStartNode();
         drawGoalNode();
         drawCurrentNode();
-        drawGridLines();
+    }
+
+    /**
+     * Draws the traceback process to find the shortest path
+     */
+    public void drawTraceBack() {
+
     }
 
     /**
@@ -69,7 +89,7 @@ public class DrawingPanel extends JPanel {
             g2d.drawLine(0, row * cell.height, getSize().width, row * cell.height);
 
         for (int column = 0; column < grid.getColumns(); column++)
-            g2d.drawLine(column * cell.width, 0, column * cell.width,getSize().height);
+            g2d.drawLine(column * cell.width, 0, column * cell.width, getSize().height);
     }
 
     /**
@@ -119,7 +139,6 @@ public class DrawingPanel extends JPanel {
         g2d.fillRect(currentNode.getX() * cell.width, currentNode.getY() * cell.height, cell.width,
                 cell.height);
     }
-
 
 
 }

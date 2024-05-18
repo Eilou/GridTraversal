@@ -13,7 +13,6 @@ public class Search {
     private GridNode goalNode;
     private GridNode currentNode;
     private String strategy;
-
     private GUIFrame guiFrame;
     private int delay;
 
@@ -45,12 +44,11 @@ public class Search {
      */
     public boolean runSearch() {
 
-
-
         openList.add(startNode);
         while (!openList.isEmpty()) {
             guiFrame.repaint();
             if (isGoal()) {
+                runTraceBack();
                return true;
             }
 
@@ -133,7 +131,8 @@ public class Search {
                     coords[1] == grid.getRows())
                 continue;
             GridNode nodeToAdd = grid.getNodeByCoords(coords[0], coords[1]);
-            nodeToAdd.setParent(currentNode);
+            if (nodeToAdd.getParent() == null && nodeToAdd != startNode)
+                nodeToAdd.setParent(currentNode);
             successors.add(nodeToAdd);
         }
 
@@ -164,6 +163,22 @@ public class Search {
             }
         }
         return vettedSuccessors;
+    }
+
+    public void runTraceBack() {
+        StringBuilder parentPath = new StringBuilder();
+        while (currentNode.getParent() != null) {
+            parentPath.append("[");
+            parentPath.append(currentNode.getX());
+            parentPath.append(", ");
+            parentPath.append(currentNode.getY());
+            parentPath.append("]");
+            parentPath.append(", ");
+            currentNode = currentNode.getParent();
+        }
+        parentPath.setLength(parentPath.length()-2);
+        System.out.println(parentPath);
+
     }
 
     public boolean isGoal() {
@@ -217,6 +232,5 @@ public class Search {
     public void setGUIFrame(GUIFrame guiFrame) {
         this.guiFrame = guiFrame;
     }
-
 
 }

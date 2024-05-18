@@ -25,6 +25,7 @@ public class ButtonPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         dijkstraButton = new JButton("Dijkstra's");
+
         dfsButton = new JButton("DFS");
         bfsButton = new JButton("BFS");
         addButtons();

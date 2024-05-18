@@ -44,7 +44,7 @@ public class Search {
      *
      * @return true if found, false if not
      */
-    public boolean runSearch() {
+    public boolean runSearch() throws InterruptedException{
 
         openList.add(startNode);
         while (!openList.isEmpty()) {
@@ -194,13 +194,13 @@ public class Search {
      * resets the instance variables of each search
      */
     public void initialise() {
+
         openList = new ArrayList<>();
         closedList = new ArrayList<>();
         parentList = new ArrayList<>();
         for (GridNode[] gridRow : grid.getGrid())
             for (GridNode gridColumn : gridRow)
                 gridColumn.setParent(null);
-
 
     }
 

@@ -13,7 +13,7 @@ public class Search {
     private GridNode startNode;
     private GridNode goalNode;
     private GridNode currentNode;
-    private String strategy;
+    private Searches strategy;
     private GUIFrame guiFrame;
     private int delay;
 
@@ -27,7 +27,7 @@ public class Search {
      * @param strategy  the strategy to run
      * @param delay     the delay between each iteration
      */
-    public Search(Grid grid, GridNode startNode, GridNode goalNode, String strategy, int delay) {
+    public Search(Grid grid, GridNode startNode, GridNode goalNode, Searches strategy, int delay) {
         this.grid = grid;
         this.openList = new ArrayList<>();
         this.closedList = new ArrayList<>();
@@ -91,16 +91,16 @@ public class Search {
     /**
      * Decides which node should be looked at next
      */
-    public GridNode pickNext(String strategy) throws RuntimeException {
+    public GridNode pickNext(Searches strategy) throws RuntimeException {
 
         switch (strategy) {
-            case "BFS" -> {
+            case BFS -> {
                 return bfs();
             }
-            case "DFS" -> {
+            case DFS -> {
                 return dfs();
             }
-            case "Dijkstra" -> {
+            case DIJKSTRA -> {
                 return dijkstra();
             }
             default -> throw new RuntimeException("Invalid strategy type");
@@ -190,6 +190,20 @@ public class Search {
         System.out.println(parentPath);
     }
 
+    /**
+     * resets the instance variables of each search
+     */
+    public void initialise() {
+        openList = new ArrayList<>();
+        closedList = new ArrayList<>();
+        parentList = new ArrayList<>();
+        for (GridNode[] gridRow : grid.getGrid())
+            for (GridNode gridColumn : gridRow)
+                gridColumn.setParent(null);
+
+
+    }
+
     public boolean isGoal() {
         return currentNode == goalNode;
     }
@@ -244,6 +258,14 @@ public class Search {
 
     public ArrayList<GridNode> getParentList() {
         return this.parentList;
+    }
+
+    public Searches getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(Searches strategy) {
+        this.strategy = strategy;
     }
 
 }

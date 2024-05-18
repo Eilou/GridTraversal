@@ -3,7 +3,9 @@ package main.java.GUI;
 import javax.swing.*;
 import java.awt.*;
 
-import main.java.GUI.*;
+import main.java.GUI.handlers.StartSearchHandler;
+import main.java.Search;
+import main.java.Searches;
 import main.java.helperGUI.*;
 
 public class ButtonPanel extends JPanel {
@@ -20,7 +22,7 @@ public class ButtonPanel extends JPanel {
         setBackground(Color.green);
         setPreferredSize(new Dimension(scaling.scaledX(0.25), scaling.scaledY(1)));
 
-        setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         dijkstraButton = new JButton("Dijkstra's");
         dfsButton = new JButton("DFS");
@@ -32,6 +34,17 @@ public class ButtonPanel extends JPanel {
         add(dijkstraButton);
         add(dfsButton);
         add(bfsButton);
+    }
+
+    /**
+     * Attach the handlers to the buttons to run the searches
+     *
+     * @param search the search algorithm class to then be ran
+     */
+    public void attachHandlers(Search search) {
+        dijkstraButton.addActionListener(new StartSearchHandler(search, Searches.DIJKSTRA));
+        dfsButton.addActionListener(new StartSearchHandler(search, Searches.DFS));
+        bfsButton.addActionListener(new StartSearchHandler(search, Searches.BFS));
     }
 
 }

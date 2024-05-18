@@ -44,4 +44,8 @@ public class GUIFrame extends JFrame {
 
     }
 
+    public DrawingPanel getDrawingPanel() {
+        return drawingPanel;
+    }
+
 }

@@ -48,7 +48,7 @@ public class DrawingPanel extends JPanel {
         if (mode.equals("Search"))
             drawSearch();
         else
-            drawTraceBack();
+            drawTraceback();
         drawGridLines();
     }
 
@@ -70,10 +70,25 @@ public class DrawingPanel extends JPanel {
     }
 
     /**
-     * Draws the traceback process to find the shortest path
+     * Draws the traceback process to find the path to the goal node
      */
-    public void drawTraceBack() {
+    public void drawTraceback() {
+        drawOpenAndClose();
+        drawParentPath();
+        drawStartNode();
+        drawGoalNode();
+    }
 
+    /**
+     * Draws the path of parents from the start node to the goal node
+     */
+    public void drawParentPath() {
+        ArrayList<GridNode> parentList = search.getParentList();
+        for (GridNode parentNode : parentList) {
+            g2d.setColor(new Color(255, 0, 0));
+            g2d.fillRect(parentNode.getX() * cell.width, parentNode.getY() * cell.height,
+                    cell.width, cell.height);
+        }
     }
 
     /**
@@ -138,6 +153,10 @@ public class DrawingPanel extends JPanel {
         g2d.setColor(new Color(255, 0, 0));
         g2d.fillRect(currentNode.getX() * cell.width, currentNode.getY() * cell.height, cell.width,
                 cell.height);
+    }
+
+    public void setMode(String mode) {
+        this.mode = "Traceback";
     }
 
 

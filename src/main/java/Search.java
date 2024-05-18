@@ -9,6 +9,7 @@ public class Search {
     private Grid grid;
     private ArrayList<GridNode> openList;
     private ArrayList<GridNode> closedList;
+    private ArrayList<GridNode> parentList;
     private GridNode startNode;
     private GridNode goalNode;
     private GridNode currentNode;
@@ -35,6 +36,7 @@ public class Search {
         this.goalNode = goalNode;
         this.strategy = strategy;
         this.delay = delay;
+        this.parentList = new ArrayList<>();
     }
 
     /**
@@ -48,8 +50,8 @@ public class Search {
         while (!openList.isEmpty()) {
             guiFrame.repaint();
             if (isGoal()) {
-                runTraceBack();
-               return true;
+                runTraceback();
+                return true;
             }
 
             try {
@@ -101,11 +103,8 @@ public class Search {
             case "Dijkstra" -> {
                 return dijkstra();
             }
-            default -> {
-                throw new RuntimeException("Invalid strategy type");
-            }
+            default -> throw new RuntimeException("Invalid strategy type");
         }
-
 
     }
 
@@ -165,20 +164,30 @@ public class Search {
         return vettedSuccessors;
     }
 
-    public void runTraceBack() {
-        StringBuilder parentPath = new StringBuilder();
+    public void runTraceback() {
+        StringBuilder parentPath = new StringBuilder("Parent path: ");
         while (currentNode.getParent() != null) {
+            guiFrame.getDrawingPanel().setMode("Traceback");
+            guiFrame.repaint();
             parentPath.append("[");
             parentPath.append(currentNode.getX());
             parentPath.append(", ");
             parentPath.append(currentNode.getY());
             parentPath.append("]");
             parentPath.append(", ");
+            parentList.add(0, currentNode);
             currentNode = currentNode.getParent();
         }
+        parentPath.append("[");
+        parentPath.append(currentNode.getX());
+        parentPath.append(", ");
+        parentPath.append(currentNode.getY());
+        parentPath.append("]");
+        parentPath.append(", ");
+        parentList.add(0, currentNode);
+
         parentPath.setLength(parentPath.length()-2);
         System.out.println(parentPath);
-
     }
 
     public boolean isGoal() {
@@ -231,6 +240,10 @@ public class Search {
 
     public void setGUIFrame(GUIFrame guiFrame) {
         this.guiFrame = guiFrame;
+    }
+
+    public ArrayList<GridNode> getParentList() {
+        return this.parentList;
     }
 
 }
